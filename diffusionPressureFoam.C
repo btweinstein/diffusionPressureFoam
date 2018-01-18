@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
 
 	while (simple.correctNonOrthogonal())
         {
-            fvScalarMatrix pEqn
+            fvVectorMatrix pEqn
             (
-                fvm::grad(P)
+                fvc::grad(P)
               - rho*g
             );
             pEqn.solve();
