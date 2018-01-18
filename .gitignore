@@ -1,0 +1,12 @@
+**/*~
+Make/linux*
+diffusionPressureFoam
+.idea/
+**.pyc
+**log.txt
+**PyFoam*
+**.OpenFOAM*
+**Gnuplotting*
+**.foam
+.ipynb_checkpoints/
+*.*/

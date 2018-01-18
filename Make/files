@@ -1,0 +1,3 @@
+stokesBuoyantSoluteFoam.C
+
+EXE = ~/git/diffusionPressureFoam/diffusionPressureFoam
