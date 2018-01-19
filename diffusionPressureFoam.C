@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         {
             fvVectorMatrix pEqn
             (
-                fvc::grad(P)
+                fvm::grad(P)
               - rho*g
             );
             pEqn.solve();
