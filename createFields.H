@@ -1,64 +1,81 @@
-    Info<< "Reading field T\n" << endl;
+Info<< "Reading field c\n" << endl;
 
-    volScalarField c
+volScalarField c
+(
+    IOobject
     (
-        IOobject
-        (
-            "c",
-            runTime.timeName(),
-            mesh,
-            IOobject::MUST_READ,
-            IOobject::AUTO_WRITE
-        ),
-        mesh
-    );
+        "c",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
 
-    volScalarField P
+Info<< "Creating pressure field P\n" << endl;
+
+volScalarField P
+(
+    IOobject
     (
-        IOobject
-        (
-            "P",
-            runTime.timeName(),
-            mesh,
-            IOobject::MUST_READ,
-            IOobject::AUTO_WRITE
-        ),
-        mesh
-    );
+        "P",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
 
-    Info<< "Reading transportProperties\n" << endl;
+Info<< "Reading transportProperties\n" << endl;
 
-    IOdictionary transportProperties
+IOdictionary transportProperties
+(
+    IOobject
     (
-        IOobject
-        (
-            "transportProperties",
-            runTime.constant(),
-            mesh,
-            IOobject::MUST_READ_IF_MODIFIED,
-            IOobject::NO_WRITE
-        )
-    );
+        "transportProperties",
+        runTime.constant(),
+        mesh,
+        IOobject::MUST_READ_IF_MODIFIED,
+        IOobject::NO_WRITE
+    )
+);
 
-    Info<< "Reading diffusion constant D\n" << endl;
+Info<< "Reading diffusion constant D\n" << endl;
 
-    dimensionedScalar D
+dimensionedScalar D
+(
+    transportProperties.lookup("D")
+);
+
+Info<< "Reading base density of the media rho_0\n" << endl;
+
+dimensionedScalar rho_0
+(
+    transportProperties.lookup("rho_0")
+);
+
+Info<< "Reading solute expansion coefficient beta \n" << endl;
+
+dimensionedScalar beta
+(
+    transportProperties.lookup("beta")
+);
+
+#include "readGravitationalAcceleration.H"
+
+Info<< "Creating density field\n" << endl;
+
+volScalarField rho
+(
+    IOobject
     (
-        transportProperties.lookup("D")
-    );
-
-    Info<< "Reading base density of the media rho_0\n" << endl;
-
-    dimensionedScalar rho_0
-    (
-        transportProperties.lookup("rho_0")
-    );
-
-    Info<< "Reading solute expansion coefficient beta \n" << endl;
-
-    dimensionedScalar beta
-    (
-        transportProperties.lookup("beta")
-    );
-
-    #include "readGravitationalAcceleration.H"
+        "rho",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    rho_0*(1 + beta*c)
+);

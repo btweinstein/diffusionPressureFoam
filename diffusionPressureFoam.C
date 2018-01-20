@@ -64,18 +64,19 @@ int main(int argc, char *argv[])
             cEqn.solve();
         }
 
-	//*** Calculate the resulting pressure field
-	volScalarField rho("rho", rho_0*(1 + beta*c));
+        //*** Calculate the resulting pressure field
+        rho = rho_0*(1 + beta*c);
+        volVectorField rhog("rhog", rho*g);
 
-	while (simple.correctNonOrthogonal())
+        while (simple.correctNonOrthogonal())
         {
             fvScalarMatrix pEqn
             (
                 fvm::laplacian(P)
-              - fvc::div(rho*g)
+              - fvc::div(rhog)
             );
-	    //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));6
-	    pEqn.setReference(0, 0);
+            //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));6
+            pEqn.setReference(0, 0);
             pEqn.solve();
         }
 
@@ -83,7 +84,7 @@ int main(int argc, char *argv[])
 
         Info<< "ExecutionTime = " << runTime.elapsedCpuTime() << " s"
             << "  ClockTime = " << runTime.elapsedClockTime() << " s"
-            << nl << endl;	
+            << nl << endl;
     }
 
     Info<< "End\n" << endl;
