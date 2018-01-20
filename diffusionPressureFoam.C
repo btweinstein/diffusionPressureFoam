@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         }
 
 	//*** Calculate the resulting pressure field
-	volScalarField rho("rho", rho_0*(1 + beta*c)); // For consistent notation with bousinesq
+	volScalarField rho("rho", rho_0*(1 + beta*c));
 
 	while (simple.correctNonOrthogonal())
         {
@@ -74,6 +74,8 @@ int main(int argc, char *argv[])
                 fvm::laplacian(P)
               - fvm::div(rho*g)
             );
+	    //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));6
+	    pEqn.setReference(0, 0);
             pEqn.solve();
         }
 
