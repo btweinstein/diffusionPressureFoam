@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         {
             fvScalarMatrix pEqn
             (
-                fvm::laplacian(P)
+                fvm::laplacian(p)
               - fvc::div(rhog)
             );
             //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));

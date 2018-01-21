@@ -13,13 +13,13 @@ volScalarField c
     mesh
 );
 
-Info<< "Creating pressure field P\n" << endl;
+Info<< "Creating pressure field p\n" << endl;
 
-volScalarField P
+volScalarField p
 (
     IOobject
     (
-        "P",
+        "p",
         runTime.timeName(),
         mesh,
         IOobject::MUST_READ,
