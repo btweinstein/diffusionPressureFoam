@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
                 fvm::laplacian(P)
               - fvc::div(rhog)
             );
-            //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));6
+            //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));
             pEqn.setReference(0, 0);
             pEqn.solve();
         }
