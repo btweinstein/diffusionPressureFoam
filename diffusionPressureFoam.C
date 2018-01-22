@@ -76,7 +76,8 @@ int main(int argc, char *argv[])
               - fvc::div(rhog)
             );
             //pEqn.setReference(pRefCell, getRefCellValue(p_rgh, pRefCell));
-            pEqn.setReference(0, 0);
+            //pEqn.setReference(0, 0);
+            // Assumes that pressure at one boundary is set.
             pEqn.solve();
         }
 
